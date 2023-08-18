@@ -1,94 +1,109 @@
-const imagem = document.getElementById("imagem");
-const palavra = document.getElementById("palavra");
-const leitor = document.getElementById("leitor");
-const mensagemTentativas = document.getElementById("tentativas");
-const btnTentar = document.getElementById("btnTentar");
-const btnResetar = document.getElementById("btnResetar");
-const mensagem = document.getElementById("mensagem");
+class JogoForca {
+imagem = document.getElementById("imagem");
+palavra = document.getElementById("palavra");
+leitor = document.getElementById("leitor");
+mensagemTentativas = document.getElementById("tentativas");
+btnTentar = document.getElementById("btnTentar");
+btnResetar = document.getElementById("btnResetar");
+mensagem = document.getElementById("mensagem");
 
-const palavras =`ABACATE,ABACAXI,ACEROLA,ACAI,ARACA,ABACATE,BACABA,BACURI,
+palavras =`ABACATE,ABACAXI,ACEROLA,ACAI,ARACA,ABACATE,BACABA,BACURI,
     BANANA,CAJA,CAJU,CARAMBOLA,CUPUAÇU,GRAVIOLA,GOIABA,JABUTICABA,JENIPAPO,
     MACA,MANGABA,MANGA,MARACUJA,MURICI,PEQUI,PITANGA,PITAYA,SAPOTI,TANGERINA,
     UMBU,UVA,UVAIA`;
 
-const listaPalavras = palavras.split(',');
+listaPalavras = this.palavras.split(',');
 
-let palavraSecreta = listaPalavras[parseInt(Math.random() * listaPalavras.length)];
-let palavraSecretaArray = palavraSecreta.split("");
-let palavraVisivel = palavraSecretaArray.map(p => "_");
+palavraSecreta = this.listaPalavras[parseInt(Math.random() * this.listaPalavras.length)];
+palavraSecretaArray = this.palavraSecreta.split("");
+palavraVisivel = this.palavraSecretaArray.map(p => "_");
 
-let tentativas = 5;
-mensagemTentativas.textContent = "Tentativas: " + tentativas;
+tentativas = 5;
 
-imagem.src = ".\\imagens\\forca" + tentativas + ".png";
+constructor(){
+    this.iniciar();
+}
 
-btnTentar.addEventListener('click', verificarResultado);
-btnResetar.addEventListener('click', resetar);
+iniciar() {
+this.tentativas = 5;
+this.mensagemTentativas.textContent = "Tentativas: " + this.tentativas;
 
-function verificarResultado() {
-    let letra = leitor.value.toUpperCase();
+this.imagem.src = ".\\imagens\\forca" + this.tentativas + ".png";
+
+this.btnTentar.addEventListener('click', () => this.verificarResultado());
+this.btnResetar.addEventListener('click', () => this.resetar());
+}
+
+verificarResultado() {
+    let letra = this.leitor.value.toUpperCase();
 
     if(letra.length > 1) {
-        mensagem.textContent = "Digite apenas uma letra!";
+        this.mensagem.textContent = "Digite apenas uma letra!";
         return;
     }
 
     let ehCorreto = false;
-    for(let i = 0; i < palavraSecretaArray.length; i++) {
-        if(palavraSecretaArray[i] == letra) {
-            palavraVisivel[i] = letra;
+    for(let i = 0; i < this.palavraSecretaArray.length; i++) {
+        if(this.palavraSecretaArray[i] == letra) {
+            this.palavraVisivel[i] = letra;
             ehCorreto = true;
         }
     }
 
-    palavra.textContent = palavraVisivel.join("");
-
+    this.palavra.textContent = this.palavraVisivel.join("");
+    this.leitor.value = "";
     if(ehCorreto) {
 
-        mensagem.textContent = "Você acertou!"
+        this.mensagem.textContent = "Você acertou!"
 
-        if(palavraEstaCerta()) {
-            mensagem.textContent = "Parabéns você venceu!";
-            btnTentar.disabled = true;
+        if(this.palavraEstaCerta()) {
+            this.mensagem.textContent = "Parabéns você venceu!";
+            this.btnTentar.disabled = true;
         }
 
         return;
     }
 
-    tentativas--;
-    imagem.src = ".\\imagens\\forca" + tentativas + ".png";
+    this.tentativas--;
+    this.imagem.src = ".\\imagens\\forca" + this.tentativas + ".png";
 
-    if(tentativas == 0) {
-        mensagem.textContent = "Você perdeu!";
-        palavra.textContent = palavraSecreta;
-        btnTentar.disabled = true;
+    if(this.tentativas == 0) {
+        this.mensagem.textContent = "Você perdeu!";
+        this.palavra.textContent = this.palavraSecreta;
+        this.btnTentar.disabled = true;
         return;
     }
 
-    mensagemTentativas.textContent = "Tentativas: " + tentativas;
-    mensagem.textContent = "Você errou!";
+    this.mensagemTentativas.textContent = "Tentativas: " + this.tentativas;
+    this.mensagem.textContent = "Você errou!";
 }
 
-function palavraEstaCerta() {
-    if(palavra.textContent.toUpperCase() == palavraSecreta)
+palavraEstaCerta() {
+    if(this.palavra.textContent.toUpperCase() == this.palavraSecreta)
         return true;
 
     return false;
 }
 
-function resetar() {
-    palavraSecreta = listaPalavras[parseInt(Math.random() * listaPalavras.length)];
-    palavraSecretaArray = palavraSecreta.split("");
-    palavraVisivel = palavraSecretaArray.map(p => "_");
+resetar() {
+    this.palavraSecreta = 
+    this.listaPalavras[parseInt(Math.random() * this.listaPalavras.length)];
+    this.palavraSecretaArray = this.palavraSecreta.split("");
+    this.palavraVisivel = this.palavraSecretaArray.map(p => "_");
 
-    palavra.textContent = palavraVisivel.join("");
+    this.palavra.textContent = this.palavraVisivel.join("");
 
-    tentativas = 5;
-    mensagemTentativas.textContent = "Tentativas: " + tentativas;
+    this.tentativas = 5;
+    this.mensagemTentativas.textContent = "Tentativas: " + this.tentativas;
 
-    imagem.src = ".\\imagens\\forca" + tentativas + ".png";
+    this.imagem.src = ".\\imagens\\forca" + this.tentativas + ".png";
 
-    leitor.value = "";
-    btnTentar.disabled = false;
-    mensagem.textContent = "Digite uma letra";
+    this.leitor.value = "";
+    this.btnTentar.disabled = false;
+    this.mensagem.textContent = "Digite uma letra";
 }
+
+}
+
+
+window.addEventListener('load', () => new JogoForca());
