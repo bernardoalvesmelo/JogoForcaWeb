@@ -64,6 +64,10 @@ body {
     cursor: pointer;
 }
 
+.tentativas {
+    font-size: large;
+}
+
 .mensagem{
     border: 1px dotted white;
     padding: 2vh 3vw 2vh 3vw;
@@ -77,15 +81,16 @@ body {
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
     gap: 3px;
 }
 
 .teclado > button {
     text-align: center;
     height: 6vh;
-    width: 15vw;
+    width: 6vw;
     border-radius: 1.5vh;
-    font-weight: 700;
+    font-size: x-large;
     background-color: #d4d4d2;
 }
 
