@@ -33,6 +33,7 @@ export class JogoForcaTela {
         alfabeto.forEach(l => {
             let botao = document.createElement("button");
             botao.textContent = l;
+            botao.id = l;
             botao.addEventListener('click', (e) => this.clicarBotao(e));
             this.teclado.appendChild(botao);
         });
@@ -51,9 +52,16 @@ export class JogoForcaTela {
             return;
         }
 
+        if (this.jogoForca.palavraVisivel.join('').includes(letra)) {
+            this.mensagem.textContent = "Você já digitou essa letra!";
+            return;
+        }
+
         let ehCorreto = this.jogoForca.verificarLetras(letra);
         this.palavra.textContent = this.jogoForca.palavraVisivel.join("");
         this.leitor.value = "";
+
+        document.getElementById(letra.toLowerCase()).disabled = true;
 
         if (ehCorreto) {
             this.mensagem.textContent = "Você acertou!"
@@ -87,5 +95,7 @@ export class JogoForcaTela {
         this.palavra.textContent = this.jogoForca.palavraVisivel.join("");
         this.btnTentar.disabled = false;
         this.mensagem.textContent = "Digite uma letra";
+
+        this.teclado.childNodes.forEach(c => c.disabled = false);
     }
 }
