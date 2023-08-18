@@ -8,8 +8,10 @@ export class JogoForcaTela {
     btnTentar = document.getElementById("btnTentar");
     btnResetar = document.getElementById("btnResetar");
     mensagem = document.getElementById("mensagem");
+    teclado = document.getElementById("teclado");
 
     jogoForca = new JogoForca();
+
     constructor() {
         this.iniciar();
     }
@@ -21,6 +23,24 @@ export class JogoForcaTela {
 
         this.btnTentar.addEventListener('click', () => this.verificarResultado());
         this.btnResetar.addEventListener('click', () => this.resetar());
+
+        this.criarTeclado();
+    }
+
+    criarTeclado() {
+        let alfabeto = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,y,z".split(',');
+        
+        alfabeto.forEach(l => {
+            let botao = document.createElement("button");
+            botao.textContent = l;
+            botao.addEventListener('click', (e) => this.clicarBotao(e));
+            this.teclado.appendChild(botao);
+        });
+    }
+
+    clicarBotao(e) {
+        this.leitor.value = e.target.textContent;
+        this.verificarResultado();
     }
 
     verificarResultado() {
